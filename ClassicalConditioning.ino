@@ -105,14 +105,6 @@ void loop() {
                 }
             }
             
-            // number of cues
-            else if (select == 'n') {
-                nCue = Serial.parseInt();
-                if (nCue < 0 || nCue == 3 || nCue > 5) {
-                    nCue = 2;
-                }
-            }
-            
             // intertrial interval
             else if (select == 'i') {
                 itiDuration = Serial.parseInt();
@@ -229,13 +221,14 @@ void loop() {
                 if (reward && waterClear) {
                     bitSet(PORTB,rewardPin); // reward valve open
                     waterClear = false; // water is not cleared
+                    printf("%lur1\n",time);
                 }
                 else {
                     bitSet(PORTB,noRewardPin); // notify if no reward is given
+                    printf("%lur0\n",time);
                 }
                 
                 state = 3;
-                printf("%lur%d\n",time,reward);
             }
           
             // state 3: reward -> 4: iti
@@ -243,7 +236,7 @@ void loop() {
                 PORTB &= B00010000; // reset pin 8-11 (turn off water valves)
                 
                 state = 4;
-                duration[4] = random(duration[4]-1000000,duration[4]+1000001); // determine iti duration
+                duration[4] = random((itiDuration-1)*1000000,itiDuration*1000000+1000001); // determine iti duration
                 printf("%lui%d\n",time,outcome);
                 outcome = false;
             }
@@ -260,11 +253,11 @@ void loop() {
                     printf("%lue%d\n",time,state);
                 }
                 else {
-                    cue = random(nCue); // choice cue for next trial
+                    cue = addCue + random(nCue); // choice cue for next trial
                     if (cue==prevCue) {
                         ++nRepeat;
                         if (nCue>1 && nRepeat>maxRepeat) {
-                            cue = (nCue - 1) - cue;
+                            cue = (addCue*2 + nCue - 1) - cue;
                         }
                     } // if same cue repeats over 3 times, choose difference cue.
                     else {
