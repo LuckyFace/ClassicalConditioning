@@ -28,12 +28,12 @@ unsigned long duration[5] = {500000,1000000,2500000,130000,5000000}; // epoch du
 unsigned long rewardProbability[4] = {100, 0, 100, 0}; // unit: percent
 
 int state = 9;
-    // {state 0: base
+    // state 0: base
     // state 1: cue
     // state 2: delay
     // state 3: reward
     // state 4: intertrial interval
-    // state 9: stand-by }
+    // state 9: stand-by
 int select = 0; // serial input (w for water, t for trial number, s for start, e for end...)
 int iTrial = 0; // current trial
 int inivalveDuration = 100; // water valve open duration
@@ -74,13 +74,13 @@ void setup() {
     PORTB &= B11010000; // reset pin 8-11 and 13 (pin 12 is sensor)
 }
 
-//// Serial printf output form {
+//// Serial printf output form
     // b000 : state 0 and trial number
     // c0 : state 1 and current cue
     // d1 : state 2
     // r0 : state 3 and current reward (Y/N)
     // i : state 4 and outcome
-    // l1 : licking }
+    // l1 : licking
     // e9 : trial end
 
 void loop() {
@@ -112,7 +112,6 @@ void loop() {
                 if (nCue < 0 || nCue == 3 || nCue > 5) {
                     nCue = 2;
                 }
-                printf("nCue = %d\n",nCue);
             }
             
             else if (select == 'i') {
