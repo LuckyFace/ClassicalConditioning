@@ -226,9 +226,9 @@ void loop() {
             // state 2: delay (1 s) -> 3: reward
             else if (state==2) { 
                 reward = (random(1,101) <= rewardProbability[cue]); // determine whether reward is given or not
-                if (reward && lickWater) {
+                if (reward && waterClear) {
                     bitSet(PORTB,rewardPin); // reward valve open
-                    lickWater = false;
+                    waterClear = false; // water is not cleared
                 }
                 else {
                     bitSet(PORTB,noRewardPin); // notify if no reward is given
