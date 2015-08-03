@@ -1,12 +1,10 @@
-/* Classical conditioning task with odor stimuli indicating the probability
-
-    // CS: Odor cue
-    // US: Water reward regardless of licking
-
+/*
+    Classical conditioning task with odor stimuli indicating the probability
+    Author: Dohoung Kim
 */
 
 //// Pin definition
-    // portD (pin 0-7)
+// portD (pin 0-7)
 #define odorPin0 2 // Normally-open valve that transmit fresh air
 #define odorPin1 3 // cue 1
 #define odorPin2 4 // cue 2
@@ -14,7 +12,7 @@
 #define odorPin4 6 // cue 4
 #define odorPin5 7 // final valve
 
-    // portB (pin 8-13)
+// portB (pin 8-13)
 #define rewardPin 1
 #define punishmentPin 0 // not used for now
 #define noRewardPin 2 // used for cheetah notification
@@ -47,6 +45,7 @@ int addCue = 0;
 
 boolean reward = 0; // reward in current trial
 boolean outcome = 0; // did mouse lick during delay period?
+boolean waterClear = true; // did mouse lick after water reward? if not, do not give additional water
 unsigned long time = 0; // current time
 unsigned long timeStart = 0; // current epoch start time
 boolean prevsensor = false; // previous sensor state
@@ -114,6 +113,7 @@ void loop() {
                 }
             }
             
+            // intertrial interval
             else if (select == 'i') {
                 itiDuration = Serial.parseInt();
                 if (itiDuration < 1 || itiDuration > 10) {
@@ -189,16 +189,19 @@ void loop() {
     
         // Sensor read
         cursensor = bitRead(PINB,sensorPin);
-        if (cursensor & ~prevsensor) { // sensor is on
+        if (cursensor & ~prevsensor) {
             printf("%lul1\n",time);
             prevsensor = cursensor;
-            if (state==2) { // if sensor is touched during delay state, make outcome true. else, it is omitted trial.
+            if (state==2) { 
                 outcome = true;
+            } // if sensor is touched during delay state, make outcome true. else, it is omitted trial.
+            if (waterClear == false) {
+                waterClear = true;
             }
-        }
-        else if (~cursensor & prevsensor) { // sensor is off
+        } // sensor is turned on
+        else if (~cursensor & prevsensor) {
             prevsensor = cursensor;
-        }
+        } // sensor is turned off
        
         // State conversion if time reaches each epoch duration
         if (time >= timeStart+duration[state]) { // is current duration(=time-timeStart) longer than epoch duration?
@@ -223,8 +226,9 @@ void loop() {
             // state 2: delay (1 s) -> 3: reward
             else if (state==2) { 
                 reward = (random(1,101) <= rewardProbability[cue]); // determine whether reward is given or not
-                if (reward) {
+                if (reward && lickWater) {
                     bitSet(PORTB,rewardPin); // reward valve open
+                    lickWater = false;
                 }
                 else {
                     bitSet(PORTB,noRewardPin); // notify if no reward is given
@@ -252,6 +256,7 @@ void loop() {
                     
                     state = 9;
                     iTrial = 0;
+                    lickWater = true;
                     printf("%lue%d\n",time,state);
                 }
                 else {
