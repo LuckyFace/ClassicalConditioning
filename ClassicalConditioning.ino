@@ -256,7 +256,7 @@ void loop() {
                     
                     state = 9;
                     iTrial = 0;
-                    lickWater = true;
+                    waterClear = true;
                     printf("%lue%d\n",time,state);
                 }
                 else {
