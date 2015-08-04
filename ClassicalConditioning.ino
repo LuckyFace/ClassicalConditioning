@@ -155,6 +155,8 @@ void loop() {
                     else if (iType == 4) {
                         nCue = 4;
                         addCue = 0;
+                        nTrial = 400;
+                        duration[3] = 82000;
                         rewardProbability[0] = 80;
                         rewardProbability[1] = 20;
                         rewardProbability[2] = 80;
