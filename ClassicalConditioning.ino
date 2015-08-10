@@ -125,6 +125,7 @@ void loop() {
                     if (iType == 0) {
                         nCue = 1;
                         addCue = 0;
+                        duration[3] = 130000;
                         rewardProbability[0] = 100;
                         
                     }
@@ -132,6 +133,7 @@ void loop() {
                     else if (iType == 1) {
                         nCue = 2;
                         addCue = 0;
+                        duration[3] = 130000;
                         rewardProbability[0] = 100;
                         rewardProbability[1] = 0;
                     }
@@ -139,6 +141,7 @@ void loop() {
                     else if (iType == 2) {
                         nCue = 2;
                         addCue = 2;
+                        duration[3] = 130000;
                         rewardProbability[0] = 100;
                         rewardProbability[1] = 0;
                     }
@@ -146,6 +149,7 @@ void loop() {
                     else if (iType == 3) {
                         nCue = 4;
                         addCue = 0;
+                        duration[3] = 130000;
                         rewardProbability[0] = 100;
                         rewardProbability[1] = 0;
                         rewardProbability[2] = 100;
@@ -167,6 +171,7 @@ void loop() {
                         nCue = 2;
                         addCue = 0;
                         nTrial = 200;
+                        duration[3] = 130000;
                         rewardProbability[0] = 100;
                         rewardProbability[1] = 0;
                         rewardProbability[2] = 100;
