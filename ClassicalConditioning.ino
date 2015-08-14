@@ -118,9 +118,8 @@ void loop() {
             else if (select == 's') {
                 // s0: 1 cue with US+ (p=100)
                 // s1: 2 cue with US+/US- (p=100/0)
-                // s2: 2 (cue 3/4) with US+/US- (p=100/0)
-                // s3: 4 cue with US+/US- (p=100/0)
-                // s4: 4 cue with probability (P=80/20)
+                // s2: 2 cue with probability (p=80/20)
+                // s3: 4 cue with probability (P=80/20)
                 int iType = Serial.parseInt();
                     if (iType == 0) {
                         nCue = 1;
@@ -140,33 +139,24 @@ void loop() {
                     
                     else if (iType == 2) {
                         nCue = 2;
-                        addCue = 2;
-                        duration[3] = 130000;
-                        rewardProbability[0] = 100;
-                        rewardProbability[1] = 0;
+                        addCue = 0;
+                        nTrial = 320;
+                        duration[3] = 92000;
+                        rewardProbability[0] = 80;
+                        rewardProbability[1] = 20;
                     }
                     
                     else if (iType == 3) {
                         nCue = 4;
                         addCue = 0;
-                        duration[3] = 130000;
-                        rewardProbability[0] = 100;
-                        rewardProbability[1] = 0;
-                        rewardProbability[2] = 100;
-                        rewardProbability[3] = 0;
-                    }
-                    
-                    else if (iType == 4) {
-                        nCue = 4;
-                        addCue = 0;
-                        nTrial = 400;
-                        duration[3] = 82000;
+                        nTrial = 320;
+                        duration[3] = 92000;
                         rewardProbability[0] = 80;
                         rewardProbability[1] = 20;
                         rewardProbability[2] = 80;
                         rewardProbability[3] = 20;
                     }
-                    
+                                        
                     else {
                         nCue = 2;
                         addCue = 0;
