@@ -216,7 +216,7 @@ try
                         
                     case 'l'
                         handles.data.lickTime = [handles.data.lickTime; time iTrial state eventData];
-                        if ~isempty(handles.data.stateTime(iTrial,1))
+                        if ~isempty(handles.data.stateTime(iTrial,1)) && handles.data.stateTime(iTrial,1)~=0
                             lickTime = (time - handles.data.stateTime(iTrial,1))/1000000;
                         else
                             lickTime = (time - 5000000)/1000000;
