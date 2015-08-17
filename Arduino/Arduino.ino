@@ -241,6 +241,8 @@ void loop() {
             // state 4: iti -> 0: base
             else if (state==4) {
                 if (iTrial>=nTrial) { // if current trial number is reached goal trial number, return to standby state
+                    PORTD = B10000000;
+                    delay(10);
                     PORTB &= B00010000; // reset water valve
                     PORTD &= B00000011; // reset odor valve
                     
