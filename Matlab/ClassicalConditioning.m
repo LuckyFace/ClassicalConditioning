@@ -88,6 +88,7 @@ switch trialType
     case 3
         nCue = 2;
         StartCue = 0;
+        set(handles.nTrial,'String','320');
     case 4
         nCue = 4;
         StartCue = 0;
